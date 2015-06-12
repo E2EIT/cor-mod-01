@@ -1,39 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!--
-    Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-    Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                    * Enable inline JS: add 'unsafe-inline' to default-src
-    -->
     <meta http-equiv="Content-Security-Policy"
           content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport"
           content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-    <link rel="stylesheet" type="text/css" href="css/topcoat-mobile-dark.css">
-    <link rel="stylesheet" type="text/css" href="css/index.css">
-    <title>Topcoat To Do</title>
+    <link rel="stylesheet" type="text/css" href="css/topcoat-mobile-light.css">
+    <link rel="stylesheet" type="text/css" href="css/app.css">
+    <title>Cordova To Do</title>
 </head>
 <body>
 <div class="topcoat-navigation-bar">
     <div class="topcoat-navigation-bar__item center full">
-        <h1 class="topcoat-navigation-bar__title">Header</h1>
+        <h1 class="topcoat-navigation-bar__title">To Do List</h1>
     </div>
 </div>
-<div class="app">
-    <h1>To Do List</h1>
-
-    <div id="deviceready" class="blink">
-        <p class="event listening">Connecting to Device</p>
-
-        <p class="event received">Device is Ready</p>
-    </div>
+<br>
+<div>
+    <input type="text" class="topcoat-text-input three-quarters" placeholder="<New Item>" value="">
+    <button id="addBtn" class="topcoat-button--cta quarter" >Add</button>
+</div>
+<br>
+<div id="deviceready" class="topcoat-list blink">
+    <h3 class="topcoat-list__header">Incomplete</h3>
+    <ul id="ulList" class="topcoat-list__container">
+        <li class="topcoat-list__item event listening">
+            <label class="topcoat-checkbox">
+                <input type="checkbox">
+                <div class="topcoat-checkbox__checkmark">
+                </div>
+                Item 1
+            </label>
+        </li>
+        <li class="topcoat-list__item event received">
+            <label class="topcoat-checkbox">
+                <input type="checkbox">
+                <div class="topcoat-checkbox__checkmark">
+                </div>
+                Item 2
+            </label>
+        </li>
+        <li class="topcoat-list__item">
+            <label class="topcoat-checkbox">
+                <input type="checkbox">
+                <div class="topcoat-checkbox__checkmark">
+                </div>
+                Item 3
+            </label>
+        </li>
+    </ul>
 </div>
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/index.js"></script>
