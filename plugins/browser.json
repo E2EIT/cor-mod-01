@@ -8,10 +8,10 @@
     },
     "installed_plugins": {
         "cordova-plugin-whitelist": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
+            "PACKAGE_NAME": "com.cloudenup.cordova-todo"
         },
         "cordova-plugin-console": {
-            "PACKAGE_NAME": "io.cordova.hellocordova"
+            "PACKAGE_NAME": "com.cloudenup.cordova-todo"
         }
     },
     "dependent_plugins": {}
