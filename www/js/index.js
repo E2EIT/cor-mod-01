@@ -16,7 +16,6 @@ var Model = {
 	removeToDoItem: function removeToDoItem(index) {
 		/**
 		 * Removes the To Do item at 'index' from the array.
-		 *
 		 * @index: integer
 		 */
 		Model.ToDoItemArray.splice(index, 1);
@@ -32,50 +31,39 @@ var View = {
 
 	reloadToDoList: function reloadToDoList() {
 		var toDoListElm = View.getElementById('ulToDoList');
-		var listHtml = '';
-		Model.ToDoItemArray.forEach(function (toDo, index) {
-			if (!toDo.complete) {
-				var toDoCbId = 'cb_' + index;
-				var itemHtml =
-					'<li class="topcoat-list__item">\n    ' +
-					'<label class="topcoat-checkbox">\n        ' +
-					'<input id=' + toDoCbId + ' type="checkbox">\n\n        ' +
-					'<div class="topcoat-checkbox__checkmark">\n        ' +
-					'</div>\n        ' +
-					toDo.title +
-					'</label>\n' +
-					'</li>';
-				listHtml += itemHtml;
-			}
+		// Clear the current HTML list
+		toDoListElm.innerHTML = '';
+		Model.ToDoItemArray.forEach(function (toDoItem, index) {
+			View.addToDoItem(toDoItem);
 		});
-		toDoListElm.innerHTML = listHtml;
 	},
 
-	addToDoItem: function (toDoItem) {
+	addToDoItem: function addToDoItem(toDoItem) {
 		var toDoListElm = View.getElementById('ulToDoList');
 		var cbId = 'cb_' + toDoItem.id;
 		var liId = 'li_' + toDoItem.id;
-		var itemHtml1
-			=	'<li id="' + liId + '" class="topcoat-list__item">\n    '
-			+	'	<label class="topcoat-checkbox">\n'
-			+	'		<input id=' + cbId + ' type="checkbox">'
-			//+	'			<div class="topcoat-checkbox__checkmark">\n'
-			//+	'			</div>\n'
-			+ 			toDoItem.title + '\n'
-			+	'	</label>\n'
-			+	'</li>';
+		var itemHtml
+			= '<li id="' + liId + '" class="topcoat-list__item">\n    '
+			+ '	<label class="topcoat-checkbox">\n'
+			+ '		<input id=' + cbId + ' type="checkbox" '
+			+ '			onclick="Controller.removeToDoItem(' + toDoItem.id + ')">\n'
+			+ '			<div class="topcoat-checkbox__checkmark">\n'
+			+ '			</div>\n'
+			+ toDoItem.title
+			+ '	</label>\n'
+			+ '</li>\n';
 
 		var itemHtml2
-			=	'<li id="' + liId + '" class="topcoat-list__item">\n    '
-			+	'	<label class="topcoat-checkbox">\n'
-			+	'		<input id=' + cbId + ' type="checkbox">\n\n'
-			+	'			<div class="topcoat-checkbox__checkmark">\n'
-			+	'			</div>\n'
-			+ 			toDoItem.title
-			+	'	</label>\n'
-			+	'</li>';
+			= '<li id="' + liId + '" class="topcoat-list__item">\n    '
+			+ '	<label class="topcoat-checkbox">\n'
+			+ '		<input id=' + cbId + ' type="checkbox">\n\n'
+			+ '			<div class="topcoat-checkbox__checkmark">\n'
+			+ '			</div>\n'
+			+ toDoItem.title
+			+ '	</label>\n'
+			+ '</li>';
 		// Add the new item to the view
-		toDoListElm.innerHTML += itemHtml1;
+		toDoListElm.innerHTML += itemHtml;
 	},
 
 	getInputText: function getInputText() {
@@ -100,8 +88,8 @@ var Controller = {
 		// Add a click listener to our Add button
 		var addBtnElm = View.getElementById('addBtn');
 		/*addBtnElm.addEventListener('click',
-			Controller.addToDoItem, false);*/
-		addBtnElm.onclick = Controller.addToDoItem;
+		 Controller.addToDoItem, false);*/
+		addBtnElm.onclick = Controller.addNewToDoItem;
 		// Start with the Add button disabled
 		addBtnElm.disabled = true;
 
@@ -116,7 +104,7 @@ var Controller = {
 		}
 	},
 
-	addToDoItem: function addToDoItem() {
+	addNewToDoItem: function addNewToDoItem() {
 		var id = Model.ToDoItemArray.length;
 		var title = View.getInputText();
 		var newToDo = new Model.ToDoItem(id, title);
@@ -127,50 +115,70 @@ var Controller = {
 		// Update the view's list
 		//View.reloadToDoList();
 		View.addToDoItem(newToDo);
-		// Set up click event for newToDo list item
-		var cbId = 'cb_' + newToDo.id;
-		var tdCbElem = View.getElementById(cbId);
-		//tdCbElem.onclick = Controller.removeToDoItem;
-		tdCbElem.onclick = function removeToDoItem(event) {
-			/** Clicking an item's checkbox removes it from the list.
-			 Figure out the ToDoItem's index and remove from the array.
-			 **/
+		/*
+		 // Set up click event for newToDo list item
+		 var cbId = 'cb_' + newToDo.id;
+		 var tdCbElem = View.getElementById(cbId);
+		 //tdCbElem.onclick = Controller.removeToDoItem;
+		 tdCbElem.onclick = function removeToDoItem(event) {
+		 /!** Clicking an item's checkbox removes it from the list.
+		 Figure out the ToDoItem's index and remove from the array.
+		 **!/
 
-			// The click event's target is the checkbox. We want it's ID property.
-			var cbId = event.target.id;
+		 // The click event's target is the checkbox. We want it's ID property.
+		 var cbId = event.target.id;
 
-			// Checkbox ID's are formatted as "cb_#", where # is the index of the actual To Do item.
-			// Slicing the sting ID will give us two parts in an array.
-			var idArray = cbId.split('_');
+		 // Checkbox ID's are formatted as "cb_#", where # is the index of the actual To Do item.
+		 // Slicing the sting ID will give us two parts in an array.
+		 var idArray = cbId.split('_');
 
-			// We want the second part.
-			var indexString = idArray[1];
+		 // We want the second part.
+		 var indexString = idArray[1];
 
-			// We still have a string. We need an integer.
-			var index = parseInt(indexString);
+		 // We still have a string. We need an integer.
+		 var index = parseInt(indexString);
 
-			// We can finally remove the correct To Do item.
-			Model.removeToDoItem(index);
+		 // We can finally remove the correct To Do item.
+		 Model.removeToDoItem(index);
 
-			// Tell the View to refresh the list
-			View.reloadToDoList();
-		};
+		 // Tell the View to refresh the list
+		 View.reloadToDoList();
+		 };
+		 */
 	},
 
-	removeToDoItem: function removeToDoItem(event) {
-		/** Clicking an item's checkbox removes it from the list.
-		   Figure out the ToDoItem's index and remove from the array.
+	/*
+	 removeToDoItem: function removeToDoItem(event) {
+	 /!** Clicking an item's checkbox removes it from the list.
+	 Figure out the ToDoItem's index and remove from the array.
+	 **!/
+
+	 // The click event's target is the checkbox. We want it's ID property.
+	 var cbId = event.target.id;
+
+	 // Checkbox ID's are formatted as "cb_#", where # is the index of the actual To Do item.
+	 // Slicing the sting ID will give us two parts in an array.
+	 var idArray = cbId.split('_');
+
+	 // We want the second part.
+	 var indexString = idArray[1];
+
+	 // We still have a string. We need an integer.
+	 var index = parseInt(indexString);
+
+	 // We can finally remove the correct To Do item.
+	 Model.removeToDoItem(index);
+
+	 // Tell the View to refresh the list
+	 View.reloadToDoList();
+	 },
+	 */
+
+	removeToDoItem: function removeToDoItem(indexString) {
+		/**
+		 * Remove a To Do from the list.
+		 * @indexString = index as a string
 		 **/
-
-		// The click event's target is the checkbox. We want it's ID property.
-		var cbId = event.target.id;
-
-		// Checkbox ID's are formatted as "cb_#", where # is the index of the actual To Do item.
-		// Slicing the sting ID will give us two parts in an array.
-		var idArray = cbId.split('_');
-
-		// We want the second part.
-		var indexString = idArray[1];
 
 		// We still have a string. We need an integer.
 		var index = parseInt(indexString);
