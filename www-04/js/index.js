@@ -29,7 +29,7 @@ var View = {
 		return document.getElementById(id);
 	},
 
-	reloadToDoList: function reloadToDoList() {
+	updateToDoCount: function reloadToDoList() {
 		var toDoListElm = View.getElementById('ulToDoList');
 		// Clear the current HTML list
 		toDoListElm.innerHTML = '';
@@ -46,7 +46,7 @@ var View = {
 			= '<li id="' + liId + '" class="topcoat-list__item">\n    '
 			+ '	<label class="topcoat-checkbox">\n'
 			+ '		<input id=' + cbId + ' type="checkbox" '
-			+ '			onclick="Controller.removeToDoItem(' + toDoItem.id + ')">\n'
+			+ '			onclick="Controller.completeToDoItem(' + toDoItem.id + ')">\n'
 			+ '			<div class="topcoat-checkbox__checkmark">\n'
 			+ '			</div>\n'
 			+ toDoItem.title
@@ -187,7 +187,7 @@ var Controller = {
 		Model.removeToDoItem(index);
 
 		// Tell the View to refresh the list
-		View.reloadToDoList();
+		View.updateToDoCount();
 	}
 };
 

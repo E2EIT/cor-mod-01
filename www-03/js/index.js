@@ -20,7 +20,7 @@ var View = {
         return document.getElementById(id);
     },
 
-    reloadToDoList: function reloadToDoList() {
+    updateToDoCount: function reloadToDoList() {
         var toDoListElm = View.getElementById()
     }
 };
@@ -49,7 +49,7 @@ var Controller = {
         // Add new item to the array
         Model.ToDoItemArray.push(newToDo);
         // Update the view's list
-        View.reloadToDoList();
+        View.updateToDoCount();
     }
 };
 
