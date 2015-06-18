@@ -50,16 +50,17 @@ var View = {
 		}
 
 		var itemHtml
-			= '<div id="' + liId + '" class="item item-checkbox">\n    '
-			+ '	<label class="checkbox">\n'
+			= '<li id="' + liId + '" class="topcoat-list__item">\n    '
+			+ '	<label class="topcoat-checkbox ' + classList + '">\n'
 			+ '		<input id=' + cbId + ' type="checkbox" '
 			+ '			onclick="Controller.toggleItemComplete(' + toDoItem.id + ')">\n'
-			+ '			' + toDoItem.title
+			+ '			<div class="topcoat-checkbox__checkmark"></div>\n'
+			+ '			<span>' + toDoItem.title + '</span>'
 			+ '	</label>\n'
-			+ '</div>\n';
+			+ '</li>\n';
 
-		// Add the new item to the view
-		toDoListElm.innerHTML += itemHtml;
+		// Add the new item to the end of the list
+		toDoListElm.insertAdjacentHTML('beforeend', itemHtml);
 		// Update the To Do counts.
 		View.updateToDoCount();
 	},

@@ -50,12 +50,11 @@ var View = {
 		}
 
 		var itemHtml
-			= '<li id="' + liId + '" class="topcoat-list__item">\n    '
-			+ '	<label class="topcoat-checkbox ' + classList + '">\n'
+			= '<li id="' + liId + '">\n    '
+			+ '	<label class="checkbox">\n'
 			+ '		<input id=' + cbId + ' type="checkbox" '
 			+ '			onclick="Controller.toggleItemComplete(' + toDoItem.id + ')">\n'
-			+ '			<div class="topcoat-checkbox__checkmark"></div>\n'
-			+ '			<span>' + toDoItem.title + '</span>'
+			+ '			' + toDoItem.title
 			+ '	</label>\n'
 			+ '</li>\n';
 
