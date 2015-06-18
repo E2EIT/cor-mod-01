@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.cloudenup.cordova-todo" version="0.03" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.cloudenup.cordova-todo" version="0.06.00" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Cordova ToDo</name>
     <description>
         A sample Apache Cordova application with a simple To Do List.
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="" href="">
+        E2E Team
     </author>
     <content src="index.html" />
     <access origin="*" />
